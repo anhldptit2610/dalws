@@ -1,0 +1,9 @@
+/firmware/dalws/compile_commands.json
+/firmware/dalws/build/
+/hardware/dalws/dalws-backups/
+/hardware/dalws/jlcpcb/
+/hardware/dalws/*-table
+/hardware/dalws/*-cache
+/hardware/dalws/production/
+/hardware/dalws/*.json
+
