@@ -1,5 +1,4 @@
 #include "st7735.h"
-#include <stdbool.h>
 
 SPI_HandleTypeDef *spiHandler;
 
@@ -60,13 +59,9 @@ void st7735_set_window(uint16_t rs, uint16_t re, uint16_t cs, uint16_t ce)
 void st7735_draw_bitmap(uint16_t *bitMap)
 {
     st7735_send_cmd(CMD_RAMWR);
-    for (int i = 0; i < SCREEN_HEIGHT; i++) {
-        for (int j = 0; j < SCREEN_WIDTH; j++) {
-            st7735_send_data(LBYTE(bitMap[j + i * 160]));
-            st7735_send_data(RBYTE(bitMap[j + i * 160]));
-        }
-    }
-    st7735_send_cmd(CMD_NOP);
+    st7735_set_cs(CS_ON);
+    st7735_set_dc(DC_DATA);
+    HAL_SPI_Transmit_DMA(spiHandler, (uint8_t *)bitMap, SCREEN_WIDTH * SCREEN_HEIGHT);
 }
 
 void st7735_init(SPI_HandleTypeDef *hspi)

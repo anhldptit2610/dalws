@@ -2,6 +2,7 @@
 #define ST7735_H
 
 #include "main.h"
+#include <stdbool.h>
 
 #define SCREEN_WIDTH    160
 #define SCREEN_HEIGHT   80
@@ -54,6 +55,13 @@
 #define CMD_GMCTRP1     0xe0
 #define CMD_GMCTRN1     0xe1
 
+typedef enum {
+    PLAIN_SPI,
+    DMA
+} st7735_flush_t;
+
 void st7735_init(SPI_HandleTypeDef *hspi);
 void st7735_draw_bitmap(uint16_t *bitMap);
+void st7735_send_cmd(uint8_t cmd);
+void st7735_set_cs(bool cs);
 #endif
