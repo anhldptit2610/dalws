@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "st7735.h": "c",
+        "main.h": "c"
+    }
+}
