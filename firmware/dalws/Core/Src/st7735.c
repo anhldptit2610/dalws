@@ -71,7 +71,7 @@ void st7735_draw_bitmap_dma(uint8_t *bitMap, int width, int height)
     st7735_send_cmd(CMD_RAMWR);
     st7735_set_cs(CS_ON);
     st7735_set_dc(DC_DATA);
-    HAL_SPI_Transmit_DMA(spiHandler, (uint8_t *)bitMap, width * height);
+    HAL_SPI_Transmit_DMA(spiHandler, bitMap, width * height * 2);
 }
 
 void st7735_init(SPI_HandleTypeDef *hspi)

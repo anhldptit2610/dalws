@@ -46,6 +46,10 @@ void disp_enable_update(void);
  */
 void disp_disable_update(void);
 
+/* Set up the UI
+*/
+void disp_create_ui(void);
+
 /**********************
  *      MACROS
  **********************/

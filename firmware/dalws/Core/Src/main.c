@@ -112,12 +112,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   lv_init();
   lv_port_disp_init(&hspi1);
-  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x003a57), LV_PART_MAIN);
-  lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(0xffffff), LV_PART_MAIN);
-  lv_obj_t * label = lv_label_create(lv_scr_act());
-  lv_label_set_text(label, "Hello, dalws!!");
-  lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(0xffffff), LV_PART_MAIN);
-  lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+  disp_create_ui();
 
   /* USER CODE END 2 */
 
@@ -129,8 +124,6 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     lv_timer_handler_run_in_period(5);
-    // lv_timer_handler();
-    // HAL_Delay(5);
   }
   /* USER CODE END 3 */
 }
@@ -504,10 +497,6 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
-{
-  // st7735_set_cs(CS_OFF);
-}
 /* USER CODE END 4 */
 
 /**
