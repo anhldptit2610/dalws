@@ -1,6 +1,13 @@
 {
     "files.associations": {
         "st7735.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "lvgl.h": "c",
+        "lv_demo_scroll.h": "c",
+        "ui.h": "c",
+        "lv_init.h": "c",
+        "lv_conf_internal.h": "c",
+        "lv_conf.h": "c",
+        "lv_version.h": "c"
     }
 }

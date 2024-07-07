@@ -1,0 +1,3 @@
+[submodule "firmware/dalws/thirdparty/lvgl"]
+	path = firmware/dalws/thirdparty/lvgl
+	url = https://github.com/lvgl/lvgl.git

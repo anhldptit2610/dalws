@@ -21,7 +21,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "st7735.h"
+#include "lvgl.h"
+#include "ui.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,7 +53,7 @@ TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim10;
 
 /* USER CODE BEGIN PV */
-
+// uint8_t bitMap[SCREEN_WIDTH * SCREEN_HEIGHT];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,11 +82,6 @@ static void MX_I2C3_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-  #define BLUE    0xF800
-  uint16_t bitMap[SCREEN_WIDTH * SCREEN_HEIGHT];
-
-  for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
-    bitMap[i] = 0x2ec8;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -114,10 +110,15 @@ int main(void)
   MX_ADC1_Init();
   MX_I2C3_Init();
   /* USER CODE BEGIN 2 */
-  st7735_init(&hspi1);
-  HAL_SPI_DeInit(&hspi1);
-  hspi1.Init.DataSize = SPI_DATASIZE_16BIT;
-  HAL_SPI_Init(&hspi1);
+  lv_init();
+  lv_port_disp_init(&hspi1);
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_hex(0x003a57), LV_PART_MAIN);
+  lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(0xffffff), LV_PART_MAIN);
+  lv_obj_t * label = lv_label_create(lv_scr_act());
+  lv_label_set_text(label, "Hello, dalws!!");
+  lv_obj_set_style_text_color(lv_scr_act(), lv_color_hex(0xffffff), LV_PART_MAIN);
+  lv_obj_align(label, LV_ALIGN_CENTER, 0, 0);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -127,14 +128,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
-      bitMap[i] = 0x2ec8;
-    st7735_draw_bitmap(bitMap);
-    HAL_Delay(4000);
-    for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++)
-      bitMap[i] = 0xfec8;
-    st7735_draw_bitmap(bitMap);
-    HAL_Delay(4000);
+    lv_timer_handler_run_in_period(5);
+    // lv_timer_handler();
+    // HAL_Delay(5);
   }
   /* USER CODE END 3 */
 }
@@ -510,7 +506,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)
 {
-  st7735_set_cs(CS_OFF);
+  // st7735_set_cs(CS_OFF);
 }
 /* USER CODE END 4 */
 

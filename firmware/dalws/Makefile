@@ -10,6 +10,12 @@
 #   2015-07-22 - first version
 # ------------------------------------------------
 
+
+# LVGL specific
+LVGL_DIR_NAME ?= lvgl
+LVGL_DIR ?= $(shell pwd)/thirdparty
+include $(LVGL_DIR)/$(LVGL_DIR_NAME)/lvgl.mk
+
 ######################################
 # target
 ######################################
@@ -38,6 +44,7 @@ BUILD_DIR = build
 C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/st7735.c \
+Core/Src/ui.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \
@@ -63,12 +70,15 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_adc.c
 
+C_SOURCES += $(CSRCS)
+
 # ASM sources
 ASM_SOURCES =  \
 startup_stm32f411xe.s
 
 # ASM sources
 ASMM_SOURCES = 
+
 
 
 #######################################
@@ -121,6 +131,7 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
+-Ithirdparty/lvgl \
 -ICore/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \

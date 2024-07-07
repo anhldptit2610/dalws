@@ -1,6 +1,6 @@
 #include "st7735.h"
 
-SPI_HandleTypeDef *spiHandler;
+SPI_HandleTypeDef *spiHandler = NULL;
 
 void st7735_set_cs(bool cs)
 {
@@ -42,26 +42,36 @@ void st7735_send_data(uint8_t data)
 /*
     st7735_set_window - set a display window
 */
-void st7735_set_window(uint16_t rs, uint16_t re, uint16_t cs, uint16_t ce)
+void st7735_set_window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
 {
     st7735_send_cmd(CMD_CASET);
-    st7735_send_data(LBYTE(cs));
-    st7735_send_data(RBYTE(cs));
-    st7735_send_data(LBYTE(ce));
-    st7735_send_data(RBYTE(ce));
+    st7735_send_data(0x00);
+    st7735_send_data(x1 + X_OFFSET);
+    st7735_send_data(0x00);
+    st7735_send_data(x2 + X_OFFSET);
     st7735_send_cmd(CMD_RASET);
-    st7735_send_data(LBYTE(rs));
-    st7735_send_data(RBYTE(rs));
-    st7735_send_data(LBYTE(re));
-    st7735_send_data(RBYTE(re));
+    st7735_send_data(0x00);
+    st7735_send_data(y1 + Y_OFFSET);
+    st7735_send_data(0x00);
+    st7735_send_data(y2 + Y_OFFSET);
 }
 
-void st7735_draw_bitmap(uint16_t *bitMap)
+void st7735_draw_bitmap(uint8_t *bitMap, int width, int height)
 {
     st7735_send_cmd(CMD_RAMWR);
     st7735_set_cs(CS_ON);
     st7735_set_dc(DC_DATA);
-    HAL_SPI_Transmit_DMA(spiHandler, (uint8_t *)bitMap, SCREEN_WIDTH * SCREEN_HEIGHT);
+    HAL_SPI_Transmit(spiHandler, bitMap, width * height * 2, 100);
+    st7735_set_cs(CS_OFF);
+}
+
+// the CS OFF signal will be in DMA Tx callback
+void st7735_draw_bitmap_dma(uint8_t *bitMap, int width, int height)
+{
+    st7735_send_cmd(CMD_RAMWR);
+    st7735_set_cs(CS_ON);
+    st7735_set_dc(DC_DATA);
+    HAL_SPI_Transmit_DMA(spiHandler, (uint8_t *)bitMap, width * height);
 }
 
 void st7735_init(SPI_HandleTypeDef *hspi)
@@ -75,51 +85,6 @@ void st7735_init(SPI_HandleTypeDef *hspi)
     HAL_Delay(10);
     st7735_set_reset(RESET_OFF);
     HAL_Delay(10);
-
-    // st7735_send_cmd(CMD_SWRESET);
-    // HAL_Delay(120);
-    // st7735_send_cmd(CMD_SLPOUT);
-    // st7735_send_cmd(CMD_FRMCTR1);
-    // st7735_send_data(0x01);
-    // st7735_send_data(0x2c);
-    // st7735_send_data(0x2d);
-    // st7735_send_cmd(CMD_FRMCTR2);
-    // st7735_send_data(0x01);
-    // st7735_send_data(0x2c);
-    // st7735_send_data(0x2d);
-    // st7735_send_cmd(CMD_FRMCTR3);
-    // st7735_send_data(0x01);
-    // st7735_send_data(0x2c);
-    // st7735_send_data(0x2d);
-    // st7735_send_data(0x01);
-    // st7735_send_data(0x2c);
-    // st7735_send_data(0x2d);
-    // st7735_send_cmd(CMD_INVCTR);
-    // st7735_send_data(0x07);
-    // st7735_send_cmd(CMD_PWCTR1);
-    // st7735_send_data(0x2a);
-    // st7735_send_data(0x02);
-    // st7735_send_data(0x84);
-    // st7735_send_cmd(CMD_PWCTR2);
-    // st7735_send_data(0xc5);
-    // st7735_send_cmd(CMD_PWCTR3);
-    // st7735_send_data(0x0a);
-    // st7735_send_data(0x00);
-    // st7735_send_cmd(CMD_PWCTR4);
-    // st7735_send_data(0x8a);
-    // st7735_send_data(0x2a);
-    // st7735_send_cmd(CMD_PWCTR5);
-    // st7735_send_data(0x8a);
-    // st7735_send_data(0xee);
-    // st7735_send_cmd(CMD_VMCTR1);
-    // st7735_send_data(0x0e);
-    // st7735_send_cmd(CMD_DISPON);
-    // st7735_send_data(0x0e);
-    // st7735_send_cmd(CMD_COLMOD);
-    // st7735_send_
-    
-
-
 
     // software reset
     st7735_send_cmd(CMD_SWRESET);
@@ -175,22 +140,10 @@ void st7735_init(SPI_HandleTypeDef *hspi)
     st7735_send_cmd(CMD_INVON);
     // madctl
     st7735_send_cmd(CMD_MADCTL);
-    st7735_send_data(0x18);
+    st7735_send_data(0x68);
     // colmod
     st7735_send_cmd(CMD_COLMOD);
     st7735_send_data(0x55);
-    // caset
-    st7735_send_cmd(CMD_CASET);
-    st7735_send_data(0x00);
-    st7735_send_data(26);
-    st7735_send_data(0x00);
-    st7735_send_data(0x4f + 26);
-    // raset
-    st7735_send_cmd(CMD_RASET);
-    st7735_send_data(0x00);
-    st7735_send_data(0x01);
-    st7735_send_data(0x00);
-    st7735_send_data(0xa0);
     // gamma adjustments(positive polarity)
     st7735_send_cmd(CMD_GMCTRP1);
     st7735_send_data(0x02);

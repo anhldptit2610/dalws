@@ -1,11 +1,14 @@
-#ifndef ST7735_H 
-#define ST7735_H
+#ifndef UI_H
+#define UI_H
 
 #include "main.h"
 #include <stdbool.h>
 
 #define SCREEN_WIDTH    160
 #define SCREEN_HEIGHT   80
+
+#define X_OFFSET        1
+#define Y_OFFSET        26
 
 #define CS_ON       0
 #define CS_OFF      1
@@ -61,7 +64,13 @@ typedef enum {
 } st7735_flush_t;
 
 void st7735_init(SPI_HandleTypeDef *hspi);
-void st7735_draw_bitmap(uint16_t *bitMap);
+void st7735_draw_bitmap(uint8_t *bitMap, int width, int height);
+void st7735_set_window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
+void st7735_draw_bitmap_dma(uint8_t *bitMap, int width, int height);
 void st7735_send_cmd(uint8_t cmd);
 void st7735_set_cs(bool cs);
+
+void ui_init(SPI_HandleTypeDef *hspi);
+
+
 #endif
