@@ -44,7 +44,13 @@ BUILD_DIR = build
 C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/st7735.c \
+Core/Src/lv_port.c \
 Core/Src/ui.c \
+Core/Src/ui_helpers.c \
+Core/Src/screens/ui_Screen1.c \
+Core/Src/fonts/ui_font_GB_4.c \
+Core/Src/fonts/ui_font_GB_8.c \
+Core/Src/fonts/ui_font_GB_16.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c \

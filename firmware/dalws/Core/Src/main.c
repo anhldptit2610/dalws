@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lvgl.h"
+#include "lv_port.h"
 #include "ui.h"
 /* USER CODE END Includes */
 
@@ -112,7 +113,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   lv_init();
   lv_port_disp_init(&hspi1);
-  disp_create_ui();
+  ui_init();
+  // disp_create_ui();
 
   /* USER CODE END 2 */
 
