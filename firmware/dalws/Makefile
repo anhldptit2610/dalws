@@ -44,6 +44,7 @@ BUILD_DIR = build
 C_SOURCES =  \
 Core/Src/main.c \
 Core/Src/st7735.c \
+Core/Src/hdc1080.c \
 Core/Src/lv_port.c \
 Core/Src/ui.c \
 Core/Src/ui_helpers.c \

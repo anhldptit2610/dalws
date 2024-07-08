@@ -9,6 +9,7 @@
         "lv_conf_internal.h": "c",
         "lv_conf.h": "c",
         "lv_version.h": "c",
-        "lv_port.h": "c"
+        "lv_port.h": "c",
+        "hdc1080.h": "c"
     }
 }
