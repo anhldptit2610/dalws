@@ -264,4 +264,3 @@ void _ui_switch_theme(int val)
     ui_theme_set(val);
 #endif
 }
-

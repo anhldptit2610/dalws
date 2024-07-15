@@ -69,8 +69,6 @@ void st7735_set_window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2);
 void st7735_draw_bitmap_dma(uint8_t *bitMap, int width, int height);
 void st7735_send_cmd(uint8_t cmd);
 void st7735_set_cs(bool cs);
-
 void ui_init(SPI_HandleTypeDef *hspi);
-
 
 #endif

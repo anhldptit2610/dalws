@@ -117,6 +117,7 @@ void lv_port_disp_init(SPI_HandleTypeDef *hspi)
     disp_drv.flush_cb = disp_flush;
 
     /*Set a display buffer*/
+    // disp_drv.draw_buf = &draw_buf_dsc_2;
     disp_drv.draw_buf = &draw_buf_dsc_2;
 
     /*Required for Example 3)*/
@@ -135,6 +136,7 @@ static void disp_init(SPI_HandleTypeDef *hspi)
 {
     /*You code here*/
     st7735_init(hspi);
+    HAL_GPIO_WritePin(ST7735_BL_GPIO_Port, ST7735_BL_Pin, 1);
 }
 
 volatile bool disp_flush_enabled = true;
@@ -162,6 +164,10 @@ static void disp_flush(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_
     int height = area->y2 - area->y1 + 1;
     st7735_set_window(area->x1, area->y1, area->x2, area->y2);
     st7735_draw_bitmap_dma((uint8_t *)color_p, width, height);
+    // st7735_draw_bitmap((uint8_t *)color_p, width, height);
+    /*IMPORTANT!!!
+     *Inform the graphics library that you are ready with the flushing*/
+    // lv_disp_flush_ready(&disp_drv);
 }
 
 void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)

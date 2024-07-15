@@ -6,4 +6,5 @@
 /hardware/dalws/*-cache
 /hardware/dalws/production/
 /hardware/dalws/*.json
+/firmware/dalws_bak/
 

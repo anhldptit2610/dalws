@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "name": "dalws",
+            "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**"
             ],
