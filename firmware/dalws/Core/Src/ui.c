@@ -9,16 +9,87 @@
 ///////////////////// VARIABLES ////////////////////
 
 
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-lv_obj_t * ui_Screen1;
-lv_obj_t * ui_time;
-lv_obj_t * ui_amorpm;
-lv_obj_t * ui_date;
+// SCREEN: ui_default
+void ui_default_screen_init(void);
+lv_obj_t * ui_default;
 lv_obj_t * ui_year;
-lv_obj_t * ui_status;
 lv_obj_t * ui_batterypercent;
+lv_obj_t * ui_hour;
+lv_obj_t * ui_colon;
+lv_obj_t * ui_min;
+lv_obj_t * ui_second;
+lv_obj_t * ui_humid;
+lv_obj_t * ui_temp;
+lv_obj_t * ui_tempnum;
+lv_obj_t * ui_humidnum;
+lv_obj_t * ui_Image1;
+lv_obj_t * ui_Image2;
+lv_obj_t * ui_Label1;
+lv_obj_t * ui_day;
+lv_obj_t * ui_Label3;
+lv_obj_t * ui_month;
+lv_obj_t * ui_ordinal;
+lv_obj_t * ui_Label6;
+lv_obj_t * ui_Label7;
+lv_obj_t * ui_Label8;
+lv_obj_t * ui_status;
+
+
+// SCREEN: ui_mainMenu
+void ui_mainMenu_screen_init(void);
+lv_obj_t * ui_mainMenu;
+lv_obj_t * ui_batterypercent2;
+lv_obj_t * ui_Label4;
+lv_obj_t * ui_settime;
+lv_obj_t * ui_check;
+lv_obj_t * ui_setdate;
+lv_obj_t * ui_setalarm;
+lv_obj_t * ui_pomodoro;
+
+
+// SCREEN: ui_setTime
+void ui_setTime_screen_init(void);
+lv_obj_t * ui_setTime;
+lv_obj_t * ui_batterypercent1;
+lv_obj_t * ui_hour1;
+lv_obj_t * ui_colon1;
+lv_obj_t * ui_min1;
+lv_obj_t * ui_second1;
+lv_obj_t * ui_Image3;
+lv_obj_t * ui_Image4;
+lv_obj_t * ui_Label2;
+lv_obj_t * ui_Label9;
+lv_obj_t * ui_Label5;
+lv_obj_t * ui_Label10;
+lv_obj_t * ui_Label11;
+lv_obj_t * ui_Label18;
+
+
+// SCREEN: ui_setDate
+void ui_setDate_screen_init(void);
+lv_obj_t * ui_setDate;
+lv_obj_t * ui_year1;
+lv_obj_t * ui_batterypercent3;
+lv_obj_t * ui_Image5;
+lv_obj_t * ui_Image6;
+lv_obj_t * ui_month1;
+lv_obj_t * ui_ordinal1;
+lv_obj_t * ui_Label14;
+lv_obj_t * ui_Label20;
+
+
+// SCREEN: ui_pomodoro1
+void ui_pomodoro1_screen_init(void);
+lv_obj_t * ui_pomodoro1;
+lv_obj_t * ui_batterypercent4;
+lv_obj_t * ui_min2;
+lv_obj_t * ui_second2;
+lv_obj_t * ui_Image7;
+lv_obj_t * ui_Image8;
+lv_obj_t * ui_Label12;
+lv_obj_t * ui_Label13;
 lv_obj_t * ui____initial_actions0;
+const lv_img_dsc_t * ui_imgset_tile[1] = {&ui_img_tile009_png};
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -40,7 +111,11 @@ void ui_init(void)
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
-    ui_Screen1_screen_init();
+    ui_default_screen_init();
+    ui_mainMenu_screen_init();
+    ui_setTime_screen_init();
+    ui_setDate_screen_init();
+    ui_pomodoro1_screen_init();
     ui____initial_actions0 = lv_obj_create(NULL);
-    lv_disp_load_scr(ui_Screen1);
+    lv_disp_load_scr(ui_default);
 }

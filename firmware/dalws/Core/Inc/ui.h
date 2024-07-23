@@ -15,22 +15,89 @@ extern "C" {
 #include "ui_helpers.h"
 #include "ui_events.h"
 
-// SCREEN: ui_Screen1
-void ui_Screen1_screen_init(void);
-extern lv_obj_t * ui_Screen1;
-extern lv_obj_t * ui_time;
-extern lv_obj_t * ui_amorpm;
-extern lv_obj_t * ui_date;
+// SCREEN: ui_default
+void ui_default_screen_init(void);
+extern lv_obj_t * ui_default;
 extern lv_obj_t * ui_year;
-extern lv_obj_t * ui_status;
 extern lv_obj_t * ui_batterypercent;
+extern lv_obj_t * ui_hour;
+extern lv_obj_t * ui_colon;
+extern lv_obj_t * ui_min;
+extern lv_obj_t * ui_second;
+extern lv_obj_t * ui_humid;
+extern lv_obj_t * ui_temp;
+extern lv_obj_t * ui_tempnum;
+extern lv_obj_t * ui_humidnum;
+extern lv_obj_t * ui_Image1;
+extern lv_obj_t * ui_Image2;
+extern lv_obj_t * ui_Label1;
+extern lv_obj_t * ui_day;
+extern lv_obj_t * ui_Label3;
+extern lv_obj_t * ui_month;
+extern lv_obj_t * ui_ordinal;
+extern lv_obj_t * ui_Label6;
+extern lv_obj_t * ui_Label7;
+extern lv_obj_t * ui_Label8;
+extern lv_obj_t * ui_status;
+// SCREEN: ui_mainMenu
+void ui_mainMenu_screen_init(void);
+extern lv_obj_t * ui_mainMenu;
+extern lv_obj_t * ui_batterypercent2;
+extern lv_obj_t * ui_Label4;
+extern lv_obj_t * ui_settime;
+extern lv_obj_t * ui_check;
+extern lv_obj_t * ui_setdate;
+extern lv_obj_t * ui_setalarm;
+extern lv_obj_t * ui_pomodoro;
+// SCREEN: ui_setTime
+void ui_setTime_screen_init(void);
+extern lv_obj_t * ui_setTime;
+extern lv_obj_t * ui_batterypercent1;
+extern lv_obj_t * ui_hour1;
+extern lv_obj_t * ui_colon1;
+extern lv_obj_t * ui_min1;
+extern lv_obj_t * ui_second1;
+extern lv_obj_t * ui_Image3;
+extern lv_obj_t * ui_Image4;
+extern lv_obj_t * ui_Label2;
+extern lv_obj_t * ui_Label9;
+extern lv_obj_t * ui_Label5;
+extern lv_obj_t * ui_Label10;
+extern lv_obj_t * ui_Label11;
+extern lv_obj_t * ui_Label18;
+// SCREEN: ui_setDate
+void ui_setDate_screen_init(void);
+extern lv_obj_t * ui_setDate;
+extern lv_obj_t * ui_year1;
+extern lv_obj_t * ui_batterypercent3;
+extern lv_obj_t * ui_Image5;
+extern lv_obj_t * ui_Image6;
+extern lv_obj_t * ui_month1;
+extern lv_obj_t * ui_ordinal1;
+extern lv_obj_t * ui_Label14;
+extern lv_obj_t * ui_Label20;
+// SCREEN: ui_pomodoro1
+void ui_pomodoro1_screen_init(void);
+extern lv_obj_t * ui_pomodoro1;
+extern lv_obj_t * ui_batterypercent4;
+extern lv_obj_t * ui_min2;
+extern lv_obj_t * ui_second2;
+extern lv_obj_t * ui_Image7;
+extern lv_obj_t * ui_Image8;
+extern lv_obj_t * ui_Label12;
+extern lv_obj_t * ui_Label13;
 extern lv_obj_t * ui____initial_actions0;
 
+LV_IMG_DECLARE(ui_img_tile009_png);    // assets/tile009.png
 
 
+LV_FONT_DECLARE(ui_font_GB_10);
+LV_FONT_DECLARE(ui_font_GB_12);
 LV_FONT_DECLARE(ui_font_GB_16);
-LV_FONT_DECLARE(ui_font_GB_8);
+LV_FONT_DECLARE(ui_font_GB_17);
 LV_FONT_DECLARE(ui_font_GB_4);
+LV_FONT_DECLARE(ui_font_GB_6);
+LV_FONT_DECLARE(ui_font_GB_8);
 
 
 void ui_init(void);

@@ -1,6 +1,20 @@
 {
     "files.associations": {
+        "st7735.h": "c",
+        "main.h": "c",
         "lvgl.h": "c",
-        "ui.h": "c"
+        "lv_demo_scroll.h": "c",
+        "ui.h": "c",
+        "lv_init.h": "c",
+        "lv_conf_internal.h": "c",
+        "lv_conf.h": "c",
+        "lv_version.h": "c",
+        "lv_port.h": "c",
+        "hdc1080.h": "c",
+        "ui_events.h": "c",
+        "ds3231.h": "c",
+        "test.h": "c",
+        "ui_helpers.h": "c",
+        "clock.h": "c"
     }
 }
