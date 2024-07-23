@@ -166,13 +166,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     lv_timer_handler_run_in_period(5);
-    // display_temp_humid();
-    // HAL_Delay(50);
     if (state && !HAL_GPIO_ReadPin(MCU_PWR_OFF_GPIO_Port, MCU_PWR_OFF_Pin)) {
-      HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
+      HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 0);
       HAL_Delay(1000);
-      if (!HAL_GPIO_ReadPin(MCU_PWR_OFF_GPIO_Port, MCU_PWR_OFF_Pin))
+      if (!HAL_GPIO_ReadPin(MCU_PWR_OFF_GPIO_Port, MCU_PWR_OFF_Pin)) {
+        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
         HAL_GPIO_WritePin(MCU_PWR_ON_GPIO_Port, MCU_PWR_ON_Pin, 0);
+      }
     }
   }
   /* USER CODE END 3 */
