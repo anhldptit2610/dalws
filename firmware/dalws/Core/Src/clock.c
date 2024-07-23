@@ -140,6 +140,8 @@ void pomodoro_run(void)
     if (!pmdrMin && !pmdrSec) {
         timeUp = true;
         HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 0);
+        __HAL_TIM_SET_AUTORELOAD(&htim3, 20 * 2);
+        __HAL_TIM_SET_COMPARE(&htim3, TIM_CHANNEL_1, 20);
         HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
         return;
     }
