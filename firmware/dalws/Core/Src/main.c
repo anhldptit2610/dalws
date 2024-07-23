@@ -154,7 +154,6 @@ int main(void)
   lv_port_disp_init(&hspi1);
   ui_init();
   clk_init();
-  // ds3231_set_time(&ds3231, 26, 43, 1);
   HAL_TIM_Base_Start_IT(&htim10);
 
   /* USER CODE END 2 */
@@ -167,8 +166,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     lv_timer_handler_run_in_period(5);
-    display_temp_humid();
-    HAL_Delay(50);
+    // display_temp_humid();
+    // HAL_Delay(50);
     if (state && !HAL_GPIO_ReadPin(MCU_PWR_OFF_GPIO_Port, MCU_PWR_OFF_Pin)) {
       HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
       HAL_Delay(1000);
@@ -617,4 +616,3 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-

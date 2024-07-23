@@ -28,5 +28,6 @@ typedef enum {
 
 void hdc1080_init(I2C_HandleTypeDef *hi2c);
 void hdc1080_get_data(uint16_t *tempHump);
+void hdc1080_send_data_request(void);
 
 #endif

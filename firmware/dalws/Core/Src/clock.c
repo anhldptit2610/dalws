@@ -18,12 +18,12 @@ extern TIM_HandleTypeDef htim10;
 extern TIM_HandleTypeDef htim11;
 extern TIM_HandleTypeDef htim3;
 volatile clk_mode_t clkMode;
-volatile clk_mode_t prevClkMode; 
 volatile bool timeUp;
 int pomodoroCnt;
 bool buttonState[4];
 int sec, min, hrs, year, mon, date;
 int pmdrSec, pmdrMin;
+uint16_t tempHumid[2];
 
 struct xy {
     int x;
@@ -74,6 +74,7 @@ void clk_set_mode(int mode)
     switch (mode) {
     case CLK_MODE_SET_TIME:
         clkMode = CLK_MODE_SET_TIME_SEC;
+        lv_label_set_text(ui_Label18, "set time");
         lv_label_set_text(ui_Label5, "");
         lv_label_set_text(ui_Label10, "");
         lv_label_set_text(ui_Label11, "sec");
@@ -121,6 +122,7 @@ void pomodoro_run(void)
     if (!pmdrMin && !pmdrSec) {
         timeUp = true;
         HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 0);
+        HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
         return;
     }
 
@@ -147,12 +149,13 @@ void clk_run(bool oneSec)
         }
         break;
     case CLK_MODE_MENU:
-        if (buttonState[BUTTON_UP])
+        if (buttonState[BUTTON_UP]) {
             currOpt = (currOpt + 1) % MENU_OPTIONS;
-        else if (buttonState[BUTTON_PMDR])
+        } else if (buttonState[BUTTON_PMDR]) {
             currOpt = (currOpt == 0) ? MENU_OPTIONS - 1 : currOpt - 1;
-        else if (buttonState[BUTTON_SET])
+        } else if (buttonState[BUTTON_SET]) {
             clk_set_mode(currOpt);            
+        }
         lv_obj_set_x(ui_check, checkPos[currOpt].x);
         lv_obj_set_y(ui_check, checkPos[currOpt].y);
         break; 
@@ -249,14 +252,14 @@ void clk_run(bool oneSec)
         }
         break;
     case CLK_MODE_SET_ALARM_HRS:
-        if (buttonState[BUTTON_UP])
+        if (buttonState[BUTTON_UP]) {
             hrs = (hrs + 1) % 60;
-        else if (buttonState[BUTTON_PMDR])
+        } else if (buttonState[BUTTON_PMDR]) {
             hrs = (!hrs) ? 23 : (hrs - 1);
-        else if (buttonState[BUTTON_SET]) {
+        } else if (buttonState[BUTTON_SET]) {
             lv_scr_load(ui_default);
-            ds3231_set_day_alarm(&ds3231, sec, min, hrs);
             clkMode = CLK_MODE_NORMAL;
+            ds3231_set_day_alarm(&ds3231, sec, min, hrs);
         }
         break;
     case CLK_MODE_ALARM_TRIGGER:
@@ -267,7 +270,7 @@ void clk_run(bool oneSec)
             HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
             lv_label_set_text(ui_status, "");
             clkMode = CLK_MODE_NORMAL;
-            // lv_scr_load(ui_default);
+            lv_scr_load(ui_default);
         }
         break;
     case CLK_MODE_POMODORO_WORK:
@@ -279,6 +282,7 @@ void clk_run(bool oneSec)
             lv_scr_load(ui_default);
         } else if (buttonState[BUTTON_PMDR] && timeUp) {
             HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
+            HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
             timeUp = false;
             if (pomodoroCnt == 4) {
                 pmdrSec = 0;
@@ -300,6 +304,7 @@ void clk_run(bool oneSec)
             lv_scr_load(ui_default);
         } else if (buttonState[BUTTON_PMDR] && timeUp) {
             HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
+            HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
             timeUp = false;
             lv_label_set_text(ui_status, "work");
             clkMode = CLK_MODE_POMODORO_WORK;
@@ -317,6 +322,7 @@ void clk_run(bool oneSec)
             lv_scr_load(ui_default);
         } else if (buttonState[BUTTON_PMDR] && timeUp) {
             HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, 1);
+            HAL_TIM_PWM_Stop(&htim3, TIM_CHANNEL_1);
             timeUp = false;
             lv_label_set_text(ui_status, "work");
             clkMode = CLK_MODE_POMODORO_WORK;
@@ -358,9 +364,24 @@ void button_scan(bool *buttonState)
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  static int i = 0, oneSec = 0;
+    static int i = 0, oneSec = 0, realTemp, realHumid;
+    static bool getTempHumid = 0;
+    static char str[10];
 
     if (htim == &htim10) {
+        if (!getTempHumid) {
+            hdc1080_send_data_request();
+            getTempHumid = 1;
+        } else if (getTempHumid) {
+            getTempHumid = 0;
+            hdc1080_get_data(tempHumid);
+            realTemp = (tempHumid[0]  * 165) / 65535 - 40;
+            lv_snprintf(str, 10, "%d\n", (int)realTemp);
+            lv_label_set_text(ui_tempnum, str);
+            realHumid = (tempHumid[1]  * 100) / 65536;
+            lv_snprintf(str, 10, "%d", (int)realHumid);
+            lv_label_set_text(ui_humidnum, str);
+        }
         oneSec = (i == 10);
         i = (i == 10) ? 0 : i + 1;
         button_scan(buttonState);
