@@ -44,15 +44,29 @@ int daysOfMonth[12] = {
 int find_day_from_date(int date, int mon, int year) 
 {
     int oddDays, passedDays;
-    bool isLeapYear;
+    bool isLeapYear, test;
+    int ret;
     
+    if ((date >= 1 && mon > 1 && year >= 2024) || (date > 1 && mon == 1 && year == 2024))
+        test = 1;
+    else
+        test = 0;
     // find out which day is Jan 1st year
     oddDays = 0;
-    for (int i = year; i < 2024; i++) {
-        if (!(i % 4) && ((i % 100) || (!(i % 100) && !(i % 400))))
-            oddDays += 2;
-        else
-            oddDays += 1;
+    if (year < 2024) {
+        for (int i = year; i < 2024; i++) {
+            if (!(i % 4) && ((i % 100) || (!(i % 100) && !(i % 400))))
+                oddDays += 2;
+            else
+                oddDays += 1;
+        }
+    } else if (year >= 2024) {
+        for (int i = 2024; i < year; i++) {
+            if (!(i % 4) && ((i % 100) || (!(i % 100) && !(i % 400))))
+                oddDays += 2;
+            else
+                oddDays += 1;
+        }
     }
     oddDays = oddDays % 7;
      
@@ -66,7 +80,11 @@ int find_day_from_date(int date, int mon, int year)
     // ok, now find out which day is date/mon/year...
     passedDays = passedDays % 7;
 
-    return (6 - oddDays + passedDays) % 7;
+    if (year <= 2024)
+        ret = ((6 - oddDays + passedDays) % 7) + test;
+    else
+        ret = (oddDays + passedDays) % 7;
+    return ret;
 }
 
 void clk_set_mode(int mode)
@@ -223,7 +241,7 @@ void clk_run(bool oneSec)
             date = (date == 1) ? (daysOfMonth[mon - 1] + ((mon - 1 == 1) ? (int)isLeapYear : 0) - 1) : date - 1;
         else if (buttonState[BUTTON_SET]) {
             lv_scr_load(ui_default);
-            ds3231_set_date(&ds3231, find_day_from_date(date, mon, year) + 1, date, mon - 1, year);
+            ds3231_set_date(&ds3231, find_day_from_date(date, mon, year), date, mon, year);
             clkMode = CLK_MODE_NORMAL;
         }
         break;

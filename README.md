@@ -3,8 +3,7 @@
 A portable handheld device.
 
 This project is my attempt to learn about microcontroller and PCB design. Now I realize that making a full, complete
-electronic project is **super** hard. I made all the steps in
-this project, from designing the PCB to program the firmware. To be honest, the PCB design process is harder. Choosing components, read the datasheet and lots of schematic, make a design, review and fix errors, quite a lot of work. But it's worth all the pennies I spent in this project.
+electronic project is **super** hard. I made all the steps in this project, from designing the PCB to program the firmware. To be honest, the PCB design process is harder. Choose components, read the datasheets and lots of schematics, make a design, review and fix errors, quite a lot of work. But it's worth all the pennies and efforts I spent for this project.
 
 ## Features
 
