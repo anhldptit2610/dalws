@@ -2,6 +2,8 @@
 
 A portable handheld device.
 
+<img src="/images/dalws_prototype.jpeg" width="192" height="256">
+
 This project is my attempt to learn about microcontroller and PCB design. Now I realize that making a full, complete
 electronic project is **super** hard. I made all the steps in this project, from designing the PCB to program the firmware. To be honest, the PCB design process is harder. Choose components, read the datasheets and lots of schematics, make a design, review and fix errors, quite a lot of work. But it's worth all the pennies and efforts I spent for this project.
 
@@ -15,7 +17,7 @@ electronic project is **super** hard. I made all the steps in this project, from
 
 ## Demo
 
-See [this](/docs/how-to.md)
+See [this](https://www.youtube.com/watch?v=NqJrIAqNZZg)
 
 ## How to compile and flash
 
@@ -36,7 +38,7 @@ You can install above dependencies by using these commands(Ubuntu/any Debian bas
 
 ### Compiling
 
-    $ git clone https://github.com/anhldptit2610/dalws.git
+    $ git clone --recurse-submodules https://github.com/anhldptit2610/dalws.git
     $ cd dalws/firmware/dalws
     $ make
 
