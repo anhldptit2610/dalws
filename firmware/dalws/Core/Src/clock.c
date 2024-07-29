@@ -4,7 +4,7 @@
 #include "clock.h"
 #include "ds3231.h"
 #include "hdc1080.h"
-#include "test.h"
+#include "display.h"
 
 #define BUTTON_SET      0
 #define BUTTON_UP       1
@@ -359,10 +359,6 @@ void clk_run(bool oneSec)
 void clk_init(void)
 {
     clkMode = CLK_MODE_NORMAL;
-    date = 1;
-    mon = 1;
-    year = 2024;
-    ds3231_set_date(&ds3231, MON + 1, date, mon, year);
 }
 
 void button_scan(bool *buttonState)
@@ -415,7 +411,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             display_time(clkMode, pmdrSec, pmdrMin, 0);         
         } else {
             display_time(clkMode, ds3231.reg[0], ds3231.reg[1], ds3231.reg[2]);
-            display_date(clkMode, ds3231.reg[DS3231_REG_DAY], ds3231.reg[DS3231_REG_DATE], ds3231.reg[DS3231_REG_MONTH], year);
+            display_date(clkMode, ds3231.reg[DS3231_REG_DAY], ds3231.reg[DS3231_REG_DATE],
+                            ds3231.reg[DS3231_REG_MONTH], 2000 + (ds3231.reg[DS3231_REG_YEAR] >> 4) * 10 + (ds3231.reg[DS3231_REG_YEAR] & 0x0f));
         }
     }
 }

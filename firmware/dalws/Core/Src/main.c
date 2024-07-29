@@ -26,7 +26,7 @@
 #include "lvgl.h"
 #include "lv_port.h"
 #include "ui.h"
-#include "test.h"
+#include "display.h"
 #include "clock.h"
 // #include "hdc1080.h"
 /* USER CODE END Includes */

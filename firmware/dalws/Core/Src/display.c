@@ -1,4 +1,4 @@
-#include "test.h"
+#include "display.h"
 #include "clock.h"
 #include <stdio.h>
 
@@ -32,7 +32,7 @@ void display_time(int mode, uint8_t sec, uint8_t min, uint8_t hrs)
         time_hrs = ui_hour;
         sec = (sec >> 4) * 10 + (sec & 0x0f);
         min = (min >> 4) * 10 + (min & 0x0f);
-        hrs = ((hrs >> 4) & 0x01) * 10 + (hrs & 0x0f);
+        hrs = ((hrs >> 4) & 0x3) * 10 + (hrs & 0x0f);
         break;
     case CLK_MODE_SET_TIME_HRS:
     case CLK_MODE_SET_TIME_MIN:

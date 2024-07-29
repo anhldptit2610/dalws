@@ -43,7 +43,7 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Core/Src/main.c \
-Core/Src/test.c \
+Core/Src/display.c \
 Core/Src/clock.c \
 Core/Src/st7735.c \
 Core/Src/hdc1080.c \
